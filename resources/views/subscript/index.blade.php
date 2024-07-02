@@ -13,14 +13,14 @@
             <div class="col-xl-5 col-lg-6 col-md-8">
 
                 <h1 class="mb-3 text-center">有料プラン登録</h1>
-                <form id="setup-form" action="{{route('subscript.register') }}" method="post">
+                <form id="setup-form" action="{{ route('subscript.register') }}" method="post">
                     @csrf
                     <input id="card-holder-name" type="text" placeholder="カード名義人" name="card-holder-name">
                     <br>
                     <div id="card-element"></div>
                     <br>
-                    <button id="card-botton" data-secret="{{ $intent->client_secret }}">サブスクリプション</botton>
                 </form>
+                <button id="card-button" data-secret="{{ $intent->client_secret }}">サブスクリプション</botton>
             </div>
         </div>
     </div>
@@ -53,8 +53,13 @@
             if (error) {
                 console.log('error');
             } else {
-                const form = document.getElementById('card_form');
-                form.payment_method.value = setupIntent.payment_method;
+                const form = document.getElementById('setup-form');
+                const hiddenInput = document.createElement('input');
+                hiddenInput.setAttribute('type', 'hidden');
+                hiddenInput.setAttribute('name', 'payment_method');
+                hiddenInput.setAttribute('value', setupIntent.payment_method);
+                form.appendChild(hiddenInput);
+
                 form.submit();
             }
         });
