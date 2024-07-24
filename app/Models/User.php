@@ -55,7 +55,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function reserve_shops() {
-        return $this->belongsToMany(Shop::class)->withTimestamps();
+        return $this->belongsToMany(Shop::class)->withTimestamps()->withPivot('count_adult', 'count_child', 'reserve_time');
     }
 
     public function favorite_shops() {

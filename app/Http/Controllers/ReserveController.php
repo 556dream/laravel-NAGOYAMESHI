@@ -5,10 +5,19 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class ReserveController extends Controller
 {
+
+    public function index(Reservation $reservation)
+    {
+        $user = Auth::user();
+        $reservations = Reservation::where('user_id', Auth::id())->orderBy('reserve_time', 'asc');
+ 
+        return view('users.reserve', compact('reservations'));
+    }
   
     /**
      * Store a newly created resource in storage.
@@ -30,8 +39,10 @@ class ReserveController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Reservation $reservation)
     {
-        //
+        $reserve->delete();
+
+        return redirect()->route('reserve.index')->with('flash_message', '予約をキャンセルしました。');
     }
 }

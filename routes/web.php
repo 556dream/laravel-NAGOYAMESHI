@@ -50,6 +50,10 @@ Route::middleware(['auth'])->group(function () {
 
 Route::post('/reserve', [ReserveController::class, 'store'])->name('reserve.store');
 
+Route::get('users/reserve', [ReserveController::class, 'index'])->name('reserve.index');
+
+Route::delete('users/reserve/{reserve}', [ReserveController::class, 'destroy'])->name('reserve.destroy');
+
 Route::controller(UserController::class)->group(function () {
     Route::get('users/mypage', 'mypage')->name('mypage');
     Route::get('users/mypage/edit', 'edit')->name('mypage.edit');
@@ -68,3 +72,9 @@ Route::controller(SubscriptController::class)->middleware('auth')->group(functio
     Route::get('subscript/cancel', 'cancel_confirm')->name('subscript.cancel_confirm');    
     Route::post('subscript/cancel', 'cancel')->name('subscript.cancel');
 });
+
+Route::get('logout', function () {
+    auth()->logout();
+    Session()->flush();
+    return Redirect::to('/login');
+})->name('logout');

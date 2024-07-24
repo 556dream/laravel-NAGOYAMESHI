@@ -22,8 +22,10 @@
             <a href="{{ route('subscript.cancel') }}" class="list-group-item">有料会員の解約</a>
             @endif
 
-            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout').submit(); class="list-group-item">ログアウト</a>
-            <form id="logout" action="{{ route('logout') }}" method="POST" style="display: none;">
+            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit(); class="list-group-item">ログアウト</a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+            </form>
         </div>
 
         <h1>お気に入り</h1>
@@ -61,7 +63,7 @@
 </div>
 
 <hr>
-<Form method="POST" action="{{ route('mypage.destroy') }}">
+<form method="POST" action="{{ route('mypage.destroy') }}">
     @csrf
     <input type="hidden" name="_method" value="DELETE">
     <div class="btn dashboard-delete-link" data-bs-toggle="modal" data-bs-target="#delete-user-confirm-modal">退会する</div>
