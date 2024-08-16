@@ -14,12 +14,12 @@
         </div>
         <div class="list-group">
             <a href="{{route('mypage.edit')}}" class="list-group-item">会員情報の編集</a>
-            <a href="{{ route('mypage.edit') }}" class="list-group-item">メールアドレス変更</a>
             @if($user->ispremium==0)
             <a href="{{ route('subscript.index') }}" class="list-group-item">有料会員登録</a>
             @else
             <a href="{{ route('subscript.edit') }}" class="list-group-item">  クレジットカード情報の変更</a>
             <a href="{{ route('subscript.cancel') }}" class="list-group-item">有料会員の解約</a>
+            <a href="{{ route('reserve.index') }}" class="list-group-item">予約一覧</a>
             @endif
 
             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit(); class="list-group-item">ログアウト</a>

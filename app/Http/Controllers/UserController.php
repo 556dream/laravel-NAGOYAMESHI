@@ -38,6 +38,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
+        $user->name = $request->input('name') ? $request->input('name') : $user->name;
         $user->email = $request->input('email') ? $request->input('email') : $user->email;
         $user->update();
         

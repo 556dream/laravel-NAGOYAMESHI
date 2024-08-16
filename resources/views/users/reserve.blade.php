@@ -32,13 +32,16 @@
                     <tr>
                         <td>
                             <a href="{{ route('shops.show', $reservation->id) }}">
-                                {{ $reservation->name }}
+                                {{ $reservation->shop->name }}
                             </a>
                         </td>
                         <td>{{ date('Y年n月j日 G時i分', strtotime($reservation->reserve_time)) }}</td>
                         <td>大人{{ $reservation->count_adult }}名　子供{{ $reservation->count_child }}名</td>
                         <td>
                             @if ($reservation->reserve_time > now())
+                                <div class="col-2">
+                                    <a href="{{ route('reserve.edit', $reservation->id) }}">予約変更</a>
+                                </div>
                                 <form action="{{ route('reserve.destroy', $reservation) }}" method="POST" onsubmit="return confirm('予約をキャンセルしてもよろしいですか？');">
                                     @csrf
                                     @method('DELETE')

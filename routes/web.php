@@ -51,12 +51,15 @@ Route::middleware(['auth'])->group(function () {
 Route::post('/reserve', [ReserveController::class, 'store'])->name('reserve.store');
 
 Route::get('users/reserve', [ReserveController::class, 'index'])->name('reserve.index');
+Route::get('users/reserve/{reservation}/edit', [ReserveController::class, 'edit'])->name('reserve.edit');
+Route::put('users/reserve/{reservation}', [ReserveController::class, 'update'])->name('reserve.update');
 
-Route::delete('users/reserve/{reserve}', [ReserveController::class, 'destroy'])->name('reserve.destroy');
+Route::delete('users/reserve/{reservation}', [ReserveController::class, 'destroy'])->name('reserve.destroy');
 
 Route::controller(UserController::class)->group(function () {
     Route::get('users/mypage', 'mypage')->name('mypage');
     Route::get('users/mypage/edit', 'edit')->name('mypage.edit');
+    Route::put('users/mypage', 'update')->name('mypage.update');
     Route::get('users/mypage/upadte', 'premium_delete')->name('mypage.premiumdelete');
     Route::get('users/mypage/favorite', 'favorite')->name('mypage.favorite');
     Route::delete('users/mypage/delete', 'destroy')->name('mypage.destroy');

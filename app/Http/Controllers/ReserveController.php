@@ -14,7 +14,7 @@ class ReserveController extends Controller
     public function index(Reservation $reservation)
     {
         $user = Auth::user();
-        $reservations = Reservation::where('user_id', Auth::id())->orderBy('reserve_time', 'asc');
+        $reservations = Reservation::where('user_id', Auth::id())->orderBy('reserve_time', 'asc')->get();
  
         return view('users.reserve', compact('reservations'));
     }
@@ -41,8 +41,23 @@ class ReserveController extends Controller
      */
     public function destroy(Reservation $reservation)
     {
-        $reserve->delete();
+        $reservation->delete();
 
         return redirect()->route('reserve.index')->with('flash_message', '予約をキャンセルしました。');
+    }
+
+    public function edit(Reservation $reservation)
+    {
+        return view('shops.edit', compact('reservation'));
+    }
+
+    public function update(Request $request, Reservation $reservation)
+    {
+        $reservation->count_adult = $request->count_adult;
+        $reservation->count_child = $request->count_child;
+        $reservation->reserve_time = $request->reserve_time;
+        $reservation->save();
+    
+        return redirect()->route('shops.index')->with('success', '予約を変更しました。');
     }
 }

@@ -19,8 +19,9 @@
                     <br>
                     <div id="card-element"></div>
                     <br>
+                    <button id="card-button" data-secret="{{ $intent->client_secret }}">サブスクリプション</botton>
                 </form>
-                <button id="card-button" data-secret="{{ $intent->client_secret }}">サブスクリプション</botton>
+                
             </div>
         </div>
     </div>
