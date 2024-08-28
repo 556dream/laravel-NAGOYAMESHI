@@ -47,6 +47,10 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
+Route::get('users/review', [ReviewController::class, 'index'])->name('review.index');
+Route::get('users/review/{review}/edit', [ReviewController::class, 'edit'])->name('review.edit');
+Route::put('users/review/{review}', [ReviewController::class, 'update'])->name('review.update');
+Route::delete('users/review/{review}', [ReviewController::class, 'destroy'])->name('review.destroy');
 
 Route::post('/reserve', [ReserveController::class, 'store'])->name('reserve.store');
 
@@ -63,6 +67,8 @@ Route::controller(UserController::class)->group(function () {
     Route::get('users/mypage/upadte', 'premium_delete')->name('mypage.premiumdelete');
     Route::get('users/mypage/favorite', 'favorite')->name('mypage.favorite');
     Route::delete('users/mypage/delete', 'destroy')->name('mypage.destroy');
+    Route::get('users/mypage/password/edit', 'edit_password')->name('mypage.edit_password');
+    Route::put('users/mypage/password', 'update_password')->name('mypage.update_password');
 });
 
 
@@ -70,8 +76,8 @@ Route::controller(UserController::class)->group(function () {
 Route::controller(SubscriptController::class)->middleware('auth')->group(function () {
     Route::get('subscript/', 'index')->name('subscript.index');
     Route::post('subscript/', 'register')->name('subscript.register');
-    Route::get('subscript/edit', 'edit')->middleware('subscribed')->name('subscript.edit');    
-    Route::post('subscript/edit', 'update')->middleware('subscribed')->name('subscript.update');
+    Route::get('subscript/edit', 'edit')->name('subscript.edit');    
+    Route::post('subscript/edit', 'update')->name('subscript.update');
     Route::get('subscript/cancel', 'cancel_confirm')->name('subscript.cancel_confirm');    
     Route::post('subscript/cancel', 'cancel')->name('subscript.cancel');
 });

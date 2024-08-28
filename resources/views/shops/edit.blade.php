@@ -29,10 +29,11 @@
                     <option value="{{ $i }}" {{ $reservation->count_child == $i ? 'selected' : '' }}>{{ $i }}人</option>
                     @endfor
                         </select>
-                        <input type="datetime-local" name="reserve_time" min="2024-04-01T00:00" max="2024-12-31T23:59" value="{{ $reservation->reserve_time }}">
+                        <input type="datetime-local" name="reserve_time" min="2024-04-01T00:00" max="2024-12-31T23:59" value="{{ \Carbon\Carbon::parse($reservation->reserve_time)->format('Y-m-d\TH:i') }}">
                         
+                        <button type="submit" class="btn">予約更新</button>
                     </form>
-                    <button type="submit" class="btn">予約更新</button>
+                    
                     
     </div>
 </div>

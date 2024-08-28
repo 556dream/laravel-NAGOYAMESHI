@@ -42,7 +42,7 @@ class SubscriptController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit()
     {
         $user= Auth::user();
         $intent = Auth::user()->createSetupIntent();
@@ -62,12 +62,15 @@ class SubscriptController extends Controller
         return view('subscript.cancel');
     }
 
-    public function cancel() {
-        Auth::user()->subscription('default')->delete();
-
+    public function cancel(Request $request, User $user) {
+        
         $user = Auth::user();
         $user->ispremium = 0;
-        $user->save();
+        $user->subscription('default')->cancelNow();
+        $user->stripe_id = null;
+        $user->pm_type = null;
+        $user->pm_last_four = null;
+        $user->update();
 
         return redirect()->route('mypage')->with('message', '有料会員を終了しました');
     }

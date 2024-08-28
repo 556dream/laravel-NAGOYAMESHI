@@ -60,7 +60,8 @@
         </div>
     </div>
     <div class="container">
-        <div class="row">
+        <div class="row border-bottom">
+            <h4>レビュー</h4>
             @foreach($reviews as $review)
             <div class="">
                 <p class"h3">{{$review->content}}</p>
@@ -72,6 +73,7 @@
             <div class="row">
                 @if ($premium === 1)
                 <div>
+                    <h4>予約の送信</h4>
                     <form method="POST" action="{{ route('reserve.store') }}">
                         @csrf
                         <label>大人の人数</label>
