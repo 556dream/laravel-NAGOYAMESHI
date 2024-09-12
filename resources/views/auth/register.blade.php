@@ -42,7 +42,7 @@
                         パスワード
                     </label>
                     <div class="col-md-7">
-                        <input id="password" type="password" name="pasword" class="form-control @error('password') is-invalid @enderror required autocomplete="new-password">
+                        <input id="password" type="password" name="password" class="form-control @error('password') is-invalid @enderror required autocomplete="new-password">
 
                         @error('password')
                         <span class="invalid-feedback" role="alert">
