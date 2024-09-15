@@ -29,7 +29,7 @@
             @foreach($shops as $shop)
                 <div class="col">
                     <a href="{{route('shops.show', $shop)}}">
-                        @if ($shop->image !== "")
+                        @if ($shop->image != "")
                         <img src="{{ asset($shop->image) }}" class="w-100" >
                         @else
                         <img src="{{ asset('img/dummy.png')}}" class="w-100">

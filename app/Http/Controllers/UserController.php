@@ -69,7 +69,7 @@ class UserController extends Controller
     public function destroy(Request $request)
     {
         Auth::user()->delete();
-        return redirect('/');
+        return redirect('/login');
     }
 
     public function update_password(Request $request)
