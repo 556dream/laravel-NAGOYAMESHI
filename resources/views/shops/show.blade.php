@@ -45,6 +45,7 @@
                         <span class="fw-bold">電話番号：</span>{{$shop->phone}}
                     </p>
                 </div>
+                @if($premium === 1)
                 @if(Auth::user()->favorite_shops()->where('shop_id', $shop->id)->exists())
                 <a href="{{ route('favorites.destroy', $shop->id) }}" class="btn" onclick="event.preventDefault(); document.getElementById('favorites-destroy-form').submit();">
                     <i class="fa fa-heart"></i>
@@ -55,6 +56,7 @@
                     <i class="fa fa-heart"></i>
                         お気に入り
                 </a>
+                @endif
                 @endif
             </div>
         </div>

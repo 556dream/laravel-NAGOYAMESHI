@@ -30,6 +30,7 @@
             </form>
         </div>
 
+        @if($user->ispremium==1)
         <h1>お気に入り</h1>
  
         <hr>
@@ -57,9 +58,9 @@
             </form>
         </div>
     @endforeach
+    @endif
  </div>
 
- <hr>
 </div>
     </div>
 </div>

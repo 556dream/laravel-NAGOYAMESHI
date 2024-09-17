@@ -12,14 +12,16 @@
         @if($category !== null)
         <a href="{{ route('shops.index') }}">ホーム</a> > {{ $category->name }}
         <h1>{{ $category->name }}の店舗一覧{{$total_count}}件</h1>
+        @elseif ($keyword !== null)
+        <a href="{{ route('shops.index') }}">ホーム</a> > 商品一覧
+        <h1>"{{ $keyword }}"の検索結果{{$total_count}}件</h1>
+        @endif
     </div>
-        @else
    <h1 class="mb-3">店舗一覧</h1>
         @if(session('success'))
         <div class="alert text-center mx-auto alert-success">
             {{ session('success') }}
         </div>
-        @endif
         @endif
         <div>
             Sort By

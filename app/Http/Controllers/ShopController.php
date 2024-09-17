@@ -15,10 +15,16 @@ class ShopController extends Controller
      */
     public function index(Request $request)
     {
+        $keyword = $request->keyword;
+
         if($request->category !== null) {
             $shops = Shop::where('category_id', $request->category)->sortable()->paginate(15);
             $total_count = Shop::where('category_id', $request->category)->count();
             $category = Category::find($request->category);
+        } elseif ($keyword !== null) {
+            $shops = Shop::where('name', 'like', "%{$keyword}%")->paginate(15);
+            $total_count = $shops->total();
+            $category = null;
         } else {
             $shops = Shop::sortable()->paginate(15);
             $total_count = "";
@@ -27,7 +33,7 @@ class ShopController extends Controller
         
         $categories = Category::all();
 
-        $array = compact('shops', 'categories', 'category', 'total_count');
+        $array = compact('shops', 'categories', 'category', 'total_count', 'keyword');
         //$this->redirect('shops.index',$array);
 
         if(Auth::check()){
