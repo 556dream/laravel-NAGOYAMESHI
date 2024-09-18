@@ -19,7 +19,7 @@
                     <div class="d-flex justify-content-between">
                         <label for="name">氏名</label>
                     </div>
-                    <div class="collapse show editUserName">
+                    <div class="show editUserName">
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->name }}" required autocomplete="name" autofocus placeholder="侍 太郎">
                         @error('name')
                         <span class="invalid-feedback" role="alert">
@@ -33,7 +33,7 @@
                     <div class="d-flex justify-content-between">
                         <label for="email">メールアドレス</label>
                     </div>
-                    <div class="collapse show editUserMail">
+                    <div class="show editUserMail">
                         <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" required autocomplete="email" autofocus placeholder="samurai@samurai.com">
                         @error('email')
                         <span class="invalid-feedback" role="alert">

@@ -19,10 +19,16 @@
                     <div class="navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto">
                         <li class="nav-item mr-5">
-           <a class="nav-link" href="{{ route('mypage') }}">
-             <i class="fas fa-user mr-1"></i><label>マイページ</label>
-           </a>
-         </li>
+                            @guest
+                            <a class="nav-link" href="{{ route('login') }}">
+                                <i class="fas fa-user mr-1"></i><label>ログイン</label>
+                            </a>
+                            @else
+                            <a class="nav-link" href="{{ route('mypage') }}">
+                                <i class="fas fa-user mr-1"></i><label>マイページ</label>
+                            </a>
+                            @endguest
+                        </li>
                         </ul>
                     </div>
                 </div>
