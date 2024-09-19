@@ -27,4 +27,6 @@ class Shop extends Model
     public function favorite_users() {
         return $this->belongsToMany(User::class)->withTimestamps();
     }
+
+    
 }

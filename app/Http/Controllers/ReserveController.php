@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
 use App\Models\User;
+use App\Models\Shop;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class ReserveController extends Controller
 {
@@ -24,6 +26,48 @@ class ReserveController extends Controller
      */
     public function store(Request $request)
     {
+        $shop = Shop::find($request->input('id'));
+
+        // 現在の日時を取得
+        $now = Carbon::now();
+        
+        // 予約日時を取得
+        $reservationDateTime = Carbon::parse($request->input('reserve_time'));
+
+
+        if ($reservationDateTime->isPast()) {
+            return back()->with('error', '現在日時より前の予約はできません');
+        }
+
+        // 店舗の営業時間を取得
+        $OpeningTime = Carbon::parse($reservationDateTime->toDateString() . ' ' .$shop->openingtime);
+        $ClosingTime = Carbon::parse($reservationDateTime->toDateString() . ' ' .$shop->closingtime);
+
+        
+
+        if ($reservationDateTime->lt($OpeningTime) || $reservationDateTime->gt($ClosingTime)) {
+            return back()->with('error', '営業時間外の予約はできません');
+        }
+
+        
+        $day_of_week_map = [
+            "毎週月曜日" => 1,
+            "毎週火曜日" => 2,
+            "毎週水曜日" => 3,
+            "毎週木曜日" => 4,
+            "毎週金曜日" => 5,
+            "毎週土曜日" => 6,
+            "毎週日曜日" => 7,
+        ];
+        $closingday = $day_of_week_map[$shop->closingday];
+
+        $reservationDate = $reservationDateTime->format('N');
+
+
+        if ($closingday == $reservationDate) {
+            return redirect()->back()->with('error', '予約日が定休日です。別の日を選択してください。');
+        }
+
 
         $reserve = new Reservation();
         $reserve->user_id = Auth::user()->id;
@@ -53,6 +97,50 @@ class ReserveController extends Controller
 
     public function update(Request $request, Reservation $reservation)
     {
+
+        $shop = Shop::find($request->input('id'));
+
+        // 現在の日時を取得
+        $now = Carbon::now();
+        
+        // 予約日時を取得
+        $reservationDateTime = Carbon::parse($request->input('reserve_time'));
+
+
+        if ($reservationDateTime->isPast()) {
+            return back()->with('error', '現在日時より前の予約はできません');
+        }
+
+        // 店舗の営業時間を取得
+        $OpeningTime = Carbon::parse($reservationDateTime->toDateString() . ' ' .$shop->openingtime);
+        $ClosingTime = Carbon::parse($reservationDateTime->toDateString() . ' ' .$shop->closingtime);
+
+        
+
+        if ($reservationDateTime->lt($OpeningTime) || $reservationDateTime->gt($ClosingTime)) {
+            return back()->with('error', '営業時間外の予約はできません');
+        }
+
+        
+        $day_of_week_map = [
+            "毎週月曜日" => 1,
+            "毎週火曜日" => 2,
+            "毎週水曜日" => 3,
+            "毎週木曜日" => 4,
+            "毎週金曜日" => 5,
+            "毎週土曜日" => 6,
+            "毎週日曜日" => 7,
+        ];
+        $closingday = $day_of_week_map[$shop->closingday];
+
+        $reservationDate = $reservationDateTime->format('N');
+
+
+        if ($closingday == $reservationDate) {
+            return redirect()->back()->with('error', '予約日が定休日です。別の日を選択してください。');
+        }
+
+
         $reservation->count_adult = $request->count_adult;
         $reservation->count_child = $request->count_child;
         $reservation->reserve_time = $request->reserve_time;
@@ -60,4 +148,6 @@ class ReserveController extends Controller
     
         return redirect()->route('shops.index')->with('success', '予約を変更しました。');
     }
+
+
 }

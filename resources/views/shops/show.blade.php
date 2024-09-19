@@ -76,6 +76,11 @@
                 @if ($premium === 1)
                 <div>
                     <h4>予約の送信</h4>
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
                     <form method="POST" action="{{ route('reserve.store') }}">
                         @csrf
                         <label>大人の人数</label>
@@ -92,6 +97,7 @@
                         </select>
                         <label>子供の人数</label>
                         <select name="count_child">
+                            <option value="0">０人</option>
                             <option value="1">１人</option>
                             <option value="2">２人</option>
                             <option value="3">３人</option>
@@ -104,6 +110,7 @@
                         <input type="datetime-local" name="reserve_time" min="2024-04-01T00:00" max="2024-12-31T23:59">
                         <button type="submit" class="btn">予約</button>
                     </form>
+                    
 
                 </div>
                 <div>
